@@ -19,9 +19,9 @@ for char in s:
     if char.isalpha():
       if len(s)  != 1: 
         print("Maar 1 letter per keer graag") 
-		  break
+        break
       else: 
         print("dit is nog niet af maar de les is afgelopen")
     else: 
       print("Vul een letter in")
-		break
+      break
