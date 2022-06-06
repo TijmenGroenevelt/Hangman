@@ -16,7 +16,7 @@ def nog_een_keer(): #functie om opnieuw te spelen
   return True
 
 def weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters): #functie om letter in woord weer te geven + foutieve letters
-  print("Foute letters: ", lijst_foute_letters)
+  print("Foute letters: ", sorted(lijst_foute_letters))
   print(woord)
   index = 0
   locaties_letter = [] #lijst met plekken
@@ -24,36 +24,35 @@ def weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters): #fun
     if geraden_letter.lower() == letter:
       locaties_letter.append(index)
     index = index + 1
-
-  print(locaties_letter)
   for locatie in locaties_letter:
     locatie_streepjes = locatie * 2 #door spaties in streepje
-    #print("locatie in streepjes", locatie_streepjes)
-    streepjes = streepjes[:locatie_streepjes] + geraden_letter + streepjes[locatie_streepjes+1:]
-  
-  print(streepjes)
+    streepjes = streepjes[:locatie_streepjes] + geraden_letter.lower() + streepjes[locatie_streepjes+1:]
   return streepjes
   
-
-def input_letter():
+def input_letter(geraden_letter_lijst):
   incorrect = True
+  print(geraden_letter_lijst)
   while incorrect:
-    input_letter = input("Voer een letter in: ")
-    if len(input_letter) == 0:
-      print("Voer 1 letter in")
+    letter_input = input("Voer een letter in: ")
+    if len(letter_input) == 0:
+      print("Voer 1 letter in.")
       incorrect = True
-    elif len(input_letter) > 1: 
-      print("Maar 1 letter per keer graag")
+    elif len(letter_input) > 1: 
+      print("Maar 1 letter per keer graag.")
       incorrect = True
-    elif not input_letter.isalpha():
-      print("Input is geen letter, voer 1 LETTER in")
+    elif not letter_input.isalpha():
+      print("Input is geen letter, voer 1 LETTER in.")
+      incorrect = True
+    elif letter_input in geraden_letter_lijst:
+      print("Letter is al gebruikt.")
       incorrect = True
     else:
       incorrect = False
-  return input_letter
+      geraden_letter_lijst.append(letter_input)
+  return letter_input, geraden_letter_lijst
 
 def check_letter_woord(geraden_letter, woord, lijst_foute_letters):
-  print("Letter", ( geraden_letter ), "ingevoerd")
+  print("Letter", ( geraden_letter ), "ingevoerd.")
   if geraden_letter.lower() in woord:
     print("Die letter is goed")  
     goed_of_fout = True
@@ -72,15 +71,26 @@ beurten = 5
 while spelen:
   woord, streepjes = woordkiezen()
   lijst_foute_letters = []
+  geraden_letter_lijst = []
   while beurten != 0:
-    geraden_letter = input_letter()
+    geraden_letter, geraden_letter_lijst = input_letter(geraden_letter_lijst)
     goed_of_fout, lijst_foute_letters = check_letter_woord(geraden_letter, woord, lijst_foute_letters)
-    streepjes = weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters)
     if not goed_of_fout: #False is fout
       beurten = beurten - 1
-    
+      if beurten == 1:
+        print("U heeft nog maar 1 beurt!")
+      else:
+        print("U heeft nog", beurten, "beurten.")
+
+    if beurten != 0:
+      streepjes = weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters)
+      print(streepjes + "\n\n")
+    else:
+      print("Beurten zijn op! Game over!!")
+
+    if "_" not in streepjes:
+      print("Woord geraden! Gefeliciteerd!!")
   #check hele woord geraden
-  #check nog genoeg beurten
   spelen = nog_een_keer()
   if spelen:
     beurten = 5
