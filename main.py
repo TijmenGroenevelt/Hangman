@@ -47,3 +47,11 @@ def in_voer():
         break
 in_voer()
 
+w = input()
+for w in x:
+		if w != x:
+			print("fout")
+			break
+		else:
+			print("goed")
+			break
