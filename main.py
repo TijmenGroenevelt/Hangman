@@ -3,12 +3,11 @@ import random
 def woordkiezen(): #functie die te raden woord terug geeft
   wordlist = ["informatica", "informatiekunde", "spelletje", "aardigheidje", "scholier", "fotografie", "waardebepaling", "specialiteit", "verzekering", "universiteit" ,"heesterperk"]
   woord = (random.choice(wordlist))
-# y = len(x)
-# print ("Het woord heeft", ( y ) , "letters")
-# streepjes = ("_ ") * (y)
-# print (streepjes)
-  # aantal streepjes ook returnen
-  return woord
+  print ("Het woord heeft", len(woord) , "letters")
+  streepjes = ("_ ") * len(woord)
+  output_lijst = [woord]
+  output_lijst.append(streepjes)
+  return output_lijst
 
 def nog_een_keer(): #functie om opnieuw te spelen
   #keuze = input("Nog een keer spelen? (Ja/Nee): ")
@@ -54,7 +53,7 @@ startgame = input("Druk op enter om te beginnen.")
 print("Het spel is begonnen!")
 spelen = True
 while spelen:
-  te_raden_woord = woordkiezen()
+  lijst_woord_streepjes = woordkiezen()
   geraden_letter = input_letter()
   
   #het hele spel
