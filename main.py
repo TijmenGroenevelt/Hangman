@@ -69,10 +69,10 @@ def input_letter(geraden_letter_lijst, beurten): #vraag letter aan speler
 def check_letter_woord(geraden_letter, woord, lijst_foute_letters):
   print("Letter", geraden_letter, "ingevoerd.") #boolean functie, in woord of niet
   if geraden_letter.lower() in woord:
-    print("Die letter is goed")  
+    print("Die letter is goed.")  
     goed_of_fout = True
   else:
-    print("Die letter is fout")
+    print("Die letter is fout.")
     goed_of_fout = False
     lijst_foute_letters.append(geraden_letter.lower()) #bijhouden foute letters
   return goed_of_fout, lijst_foute_letters
@@ -136,6 +136,7 @@ while spelen:
       print(streepjes + "\n\n")
     else:
       print("Beurten zijn op! Game over!!")
+      print("Het woord was:", woord)
 
     if "_" not in streepjes: #check hele woord geraden
       print("Woord geraden! Gefeliciteerd!!")
