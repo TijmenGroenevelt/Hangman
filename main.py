@@ -15,11 +15,9 @@ def nog_een_keer(): #functie om opnieuw te spelen
   #if ja/JA/Ja:
   #return True
   #else:
-  return False
+  return True
 
-def gameGoed(): #functie om letter in woord weer te geven
-  pass
-def gameFout(): 
+def weergeven_woord(): #functie om letter in woord weer te geven + foutieve letters
   pass
 
 def input_letter():
@@ -39,22 +37,36 @@ def input_letter():
       incorrect = False
   return input_letter
 
-def check_letter_woord(input_letter):
-  print("Letter", ( input_letter ), "ingevoerd")
-  if input_letter in woord:
-    print("Die letter is goed")
-    gameGoed()
+def check_letter_woord(geraden_letter, lijst_woord_streepjes):
+  woord = lijst_woord_streepjes[0]
+  streepjes = lijst_woord_streepjes[1]
+  print("Letter", ( geraden_letter ), "ingevoerd")
+
+  if geraden_letter.lower() in woord:
+    print("Die letter is goed")  
+    goed_of_fout = True
   else:
-    print("fout")
-    gameFout()
+    print("Die letter is fout")
+    goed_of_fout = False
+  
+  weergeven_woord()
+  return goed_of_fout
+  
 
 #Hier begint het spel, na alle functies
 startgame = input("Druk op enter om te beginnen.")
 print("Het spel is begonnen!")
 spelen = True
-while spelen:
+beurten = 5
+while spelen and beurten != 0:
   lijst_woord_streepjes = woordkiezen()
   geraden_letter = input_letter()
-  
-  #het hele spel
-  spelen = nog_een_keer()  
+  goed_of_fout = check_letter_woord(geraden_letter, lijst_woord_streepjes)
+  if not goed_of_fout: #False is fout
+    beurten = beurten - 1
+    
+  #check hele woord geraden
+  #check nog genoeg beurten
+  spelen = nog_een_keer()
+  if spelen:
+    beurten = 5
