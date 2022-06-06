@@ -8,16 +8,23 @@ def woordkiezen(): #functie die te raden woord terug geeft
   return woord, streepjes
 
 def nog_een_keer(): #functie om opnieuw te spelen
-  #keuze = input("Nog een keer spelen? (Ja/Nee): ")
-  #checken of input correct is
-  #if ja/JA/Ja:
-  #return True
-  #else:
-  return True
+  invalide_keuze = True
+  while invalide_keuze: #checken of input correct is (ja of nee)
+    keuze = input("Nog een keer spelen? (ja/nee): ")
+    keuze = keuze.lower()
+    if keuze not in ["ja", "nee"]:
+      print("Voer correcte input in (ja/nee)")
+    else:
+      invalide_keuze = False
+
+  if keuze.lower() == "ja":
+    return True #opnieuw spelen
+  else:
+    return False #niet opnieuw spelen
 
 def weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters): #functie om letter in woord weer te geven + foutieve letters
   print("Foute letters: ", sorted(lijst_foute_letters))
-  print(woord)
+  #print(woord)
   index = 0
   locaties_letter = [] #lijst met plekken
   for letter in woord:
@@ -31,7 +38,6 @@ def weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters): #fun
   
 def input_letter(geraden_letter_lijst):
   incorrect = True
-  print(geraden_letter_lijst)
   while incorrect:
     letter_input = input("Voer een letter in: ")
     if len(letter_input) == 0:
@@ -88,9 +94,11 @@ while spelen:
     else:
       print("Beurten zijn op! Game over!!")
 
-    if "_" not in streepjes:
+    if "_" not in streepjes: #check hele woord geraden
       print("Woord geraden! Gefeliciteerd!!")
-  #check hele woord geraden
+      break
+      
   spelen = nog_een_keer()
   if spelen:
     beurten = 5
+print("Einde spel.")
