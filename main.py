@@ -36,26 +36,35 @@ def weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters): #fun
     streepjes = streepjes[:locatie_streepjes] + geraden_letter.lower() + streepjes[locatie_streepjes+1:]
   return streepjes
   
-def input_letter(geraden_letter_lijst):
+def input_letter(geraden_letter_lijst, beurten):
   incorrect = True
-  while incorrect:
+  while incorrect: #loop die doorgaat tot 1 nieuwe letter is gegeven
     letter_input = input("Voer een letter in: ")
     if len(letter_input) == 0:
       print("Voer 1 letter in.")
       incorrect = True
+      beurten = beurten - 1
+      geef_beurten_weer(beurten)
     elif len(letter_input) > 1: 
       print("Maar 1 letter per keer graag.")
       incorrect = True
+      beurten = beurten - 1
+      geef_beurten_weer(beurten)
     elif not letter_input.isalpha():
       print("Input is geen letter, voer 1 LETTER in.")
       incorrect = True
-    elif letter_input in geraden_letter_lijst:
+      beurten = beurten - 1
+      geef_beurten_weer(beurten)
+    elif letter_input in geraden_letter_lijst: #voor dubbele letter geen beurt er af
       print("Letter is al gebruikt.")
       incorrect = True
     else:
       incorrect = False
       geraden_letter_lijst.append(letter_input)
-  return letter_input, geraden_letter_lijst
+    if beurten == 0:
+      break
+    
+  return letter_input, geraden_letter_lijst, beurten
 
 def check_letter_woord(geraden_letter, woord, lijst_foute_letters):
   print("Letter", ( geraden_letter ), "ingevoerd.")
@@ -68,7 +77,12 @@ def check_letter_woord(geraden_letter, woord, lijst_foute_letters):
     lijst_foute_letters.append(geraden_letter.lower())
   return goed_of_fout, lijst_foute_letters
 
-
+def geef_beurten_weer(beurten):
+  if beurten == 1:
+    print("U heeft nog maar 1 beurt!")
+  else:
+    print("U heeft nog", beurten, "beurten.")
+    
 #Hier begint het spel, na alle functies
 startgame = input("Druk op enter om te beginnen.")
 print("Het spel is begonnen!")
@@ -79,16 +93,15 @@ while spelen:
   lijst_foute_letters = []
   geraden_letter_lijst = []
   while beurten != 0:
-    geraden_letter, geraden_letter_lijst = input_letter(geraden_letter_lijst)
-    goed_of_fout, lijst_foute_letters = check_letter_woord(geraden_letter, woord, lijst_foute_letters)
-    if not goed_of_fout: #False is fout
-      beurten = beurten - 1
-      if beurten == 1:
-        print("U heeft nog maar 1 beurt!")
-      else:
-        print("U heeft nog", beurten, "beurten.")
+    geraden_letter, geraden_letter_lijst, beurten = input_letter(geraden_letter_lijst, beurten)
+    
+    if beurten != 0: #check of beurten 0 zijn na invalide invoer
+      goed_of_fout, lijst_foute_letters = check_letter_woord(geraden_letter, woord, lijst_foute_letters)
+      if not goed_of_fout: #False is fout
+        beurten = beurten - 1
+        geef_beurten_weer(beurten)
 
-    if beurten != 0:
+    if beurten != 0: #check if beurten 0 zijn na foute letter
       streepjes = weergeven_woord(geraden_letter, woord, streepjes, lijst_foute_letters)
       print(streepjes + "\n\n")
     else:
