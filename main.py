@@ -82,12 +82,42 @@ def geef_beurten_weer(beurten):
     print("U heeft nog maar 1 beurt!")
   else:
     print("U heeft nog", beurten, "beurten.")
+
+  print(galg_plaatjes[beurten])
     
 #Hier begint het spel, na alle functies
 startgame = input("Druk op enter om te beginnen.")
 print("Het spel is begonnen!")
 spelen = True
 beurten = 5
+galg_plaatjes = ['''
+   +---+
+       |
+       |
+       |
+      ===''', '''
+   +---+
+   O   |
+       |
+       |
+      ===''', '''
+   +---+
+   O   |
+   |   |
+       |
+      ===''', '''
+   +---+
+   O   |
+  /|\  |
+       |
+      ===''', '''
+   +---+
+   O   |
+  /|\  |
+  / \  |
+      ===''']
+galg_plaatjes.reverse() #omdraaien voor beurten getal
+
 while spelen:
   woord, streepjes = woordkiezen()
   lijst_foute_letters = []
