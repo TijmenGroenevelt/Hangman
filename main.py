@@ -3,8 +3,9 @@ import random
 def woordkiezen(): #functie die te raden woord terug geeft
   wordlist = ["informatica", "informatiekunde", "spelletje", "aardigheidje", "scholier", "fotografie", "waardebepaling", "specialiteit", "verzekering", "universiteit" ,"heesterperk"]
   woord = (random.choice(wordlist))
-  print ("Het woord heeft", len(woord) , "letters")
+  print ("Het woord heeft", len(woord) , "letters.")
   streepjes = ("_ ") * len(woord) #geeft  "_ _ _ _ _ _ _ "
+  print (streepjes + "\n\n")
   return woord, streepjes
 
 def nog_een_keer(): #boolean functie om opnieuw te spelen
